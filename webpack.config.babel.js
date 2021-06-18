@@ -7,8 +7,6 @@ import path from 'path';
 
 module.exports = (env, argv) => {
   const { prod } = env;
-  const dev = !prod;
-  const browsers = ['> 1%', 'last 2 versions']
   return {
     context: path.resolve(__dirname, 'src'),
     entry: './index.js',
@@ -45,9 +43,9 @@ module.exports = (env, argv) => {
           include: [path.resolve(__dirname, 'src/components')],
           use: [
             `style-loader`,
-            {loader: 'css-loader', options: { sourceMap: dev, modules: true, importLoaders: 1 }},
+            {loader: 'css-loader', options: { sourceMap: !prod, modules: true, importLoaders: 1 }},
             'postcss-loader',
-            {loader: 'sass-loader', options: { sourceMap: dev }},
+            {loader: 'sass-loader', options: { sourceMap: !prod }},
           ]
         },
         {
@@ -55,9 +53,9 @@ module.exports = (env, argv) => {
           exclude: [path.resolve(__dirname, 'src/components')],
           use: [
             `style-loader`,
-            {loader: 'css-loader', options: { sourceMap: dev }},
+            {loader: 'css-loader', options: { sourceMap: !prod }},
             'postcss-loader',
-            {loader: 'sass-loader', options: { sourceMap: dev }},
+            {loader: 'sass-loader', options: { sourceMap: !prod }},
           ]
         },
         { test: /\.json$/, use: 'json-loader' },

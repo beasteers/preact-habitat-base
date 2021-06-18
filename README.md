@@ -46,6 +46,19 @@ npm run watch
 npm run build
 ```
 
+#### Docker
+if you want the demo to run in docker, you can do:
+```bash
+# move the docker files to the right place
+mv docker/* .
+
+# build your package and start it
+docker-compose up -d --build
+```
+Otherwise you can just delete the `docker/` folder.
+
+I included this because it was a bit of a trick getting the npm/nginx setup process working and required overriding the nginx config to redirect all urls to `index.html` instead of just `/` and throwing a `404` for any nested pages if you're using something like `react-router`.
+
 ## Basic Widget Structure
 
 ```javascript

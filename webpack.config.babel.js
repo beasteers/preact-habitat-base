@@ -1,8 +1,5 @@
 import webpack from 'webpack';
-// import autoprefixer from 'autoprefixer';
 import path from 'path';
-// import HtmlWebpackPlugin from 'html-webpack-plugin';
-
 
 
 module.exports = (env, argv) => {
@@ -29,8 +26,10 @@ module.exports = (env, argv) => {
       alias: {
         components: path.resolve(__dirname, 'src/components'), // used for tests
         style: path.resolve(__dirname, 'src/style'),
-        react: 'preact-compat',
-        'react-dom': 'preact-compat'
+        "react": "preact/compat",
+        "react-dom/test-utils": "preact/test-utils",
+        "react-dom": "preact/compat",     // Must be below test-utils
+        "react/jsx-runtime": "preact/jsx-runtime"
       }
     },
   
@@ -67,23 +66,8 @@ module.exports = (env, argv) => {
       ]
     },
   
-    plugins: [
-      new webpack.NoEmitOnErrorsPlugin(),
-      // new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(ENV) }),
-      // new HtmlWebpackPlugin(),
-    ],
-  
+    plugins: [new webpack.NoEmitOnErrorsPlugin()],
     stats: { colors: true },
-  
-    // node: {
-    //   global: true,
-    //   process: false,
-    //   Buffer: false,
-    //   __filename: false,
-    //   __dirname: false,
-    //   setImmediate: false
-    // },
-  
     devtool: prod ? false : 'source-map',
   
     devServer: {

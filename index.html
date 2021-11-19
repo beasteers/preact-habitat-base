@@ -5,17 +5,28 @@
 	<title>Preact Example</title>
 	<style>
 		body {
-			background: rgb(22, 218, 248);
+			background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab), url(http://images6.fanpop.com/image/photos/43400000/Nighttime-nighttime-43449739-500-780.gif) no-repeat center center fixed;
+			background-color: rgb(11, 0, 12);
+			background-size: 150% 150%;
+			animation: panning 15s ease-in-out infinite alternate;
+			background-blend-mode: soft-light;
+			
 			height: 100vh;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			flex-direction: column;
 		}
+		
+		@keyframes panning {
+			0% { background-position: 50% 50%; }
+			50% { background-position: 100% 100%; }
+			100% { background-position: 0% 100%; }
+		}
+		
 	</style>
 </head>
 <body>
-
 	<!-- Single Instance (with `inline: true`) -->
 
 	<!-- that's how we embed the widget using habitat -->
@@ -30,10 +41,12 @@
 
 	<!-- Here's how you can support multiple instances -->
 
-	<div class="super-cool-widget" data-prop-name="Universe" data-prop-color="red"></div>
-	<div class="super-cool-widget" data-prop-name="Parallel Universe" data-prop-color="blue"></div>
-	<div class="super-cool-widget" data-prop-name="Perpendicular Universe" data-prop-color="green"></div>
-	<div class="super-cool-widget" data-prop-name="Bisecting Universe" data-prop-color="purple"></div>
+	<div class="super-cool-widget" data-prop-name="Universe" data-prop-color="white"></div>
+	<div class="super-cool-widget" data-prop-name="Parallel Universe" data-prop-color="#5e5eff"></div>
+	<div class="super-cool-widget" data-prop-name="Perpendicular Universe" data-prop-color="#95d595"></div>
+	<div class="super-cool-widget" data-prop-name="Bisecting Universe" data-prop-color="#a3327f" data-prop-reversed="true" data-prop-thickness="0.5rem"></div>
+	<div class="super-cool-widget" data-prop-name="Janet" data-prop-color="#e1ce86" data-prop-reversed="true"></div>
+	<!-- <div class="goodnight-widget" data-prop-name="moon" data-prop-color="#e1ce86"></div> -->
 
 	<script async src="/build/bundle.js" data-mount-in=".super-cool-widget" type="text/javascript"></script>
 </body>

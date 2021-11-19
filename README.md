@@ -2,6 +2,27 @@
 
 Boilerplate code for getting a modern Preact widget running using Preact Habitat.
 
+### tl;dr
+React, but tiny! Lil baby widgets for wordpress (or any other html page)!
+```bash
+git clone https://github.com/beasteers/preact-habitat-base mywidget
+cd mywidget
+npm i
+
+# ... insert your react code into src/components/index.js (and remember to export default!)
+# npm run watch  # use this to dev - autoreloads at localhost:9009
+
+npm run build
+cp build/bundle.js ../../../somewhere  # you can take bundle.js and leave the rest!
+```
+
+Use in your HTML like this:
+
+```html
+<div class="widget" data-prop-name="Universe" data-prop-color="red"></div>
+<script async src="/build/bundle.js" data-mount-in=".widget" type="text/javascript"></script>
+```
+
 ### Explanation
 
 I flipping love React - it makes writing frontend code so much more fun and makes me never want to touch d3 or jQuery for app dev again! But in the real world, we're often needing to use other platforms such as Wordpress to manage page content and it's not easy to integrate react into that workflow. 
@@ -12,7 +33,8 @@ So to help with that, someone built `preact-habitat` (god I love open-source com
 
 The only problem now was that, the only example project was a login form that was a few years old, with a bunch of out-of-date packages and configuration formats, extra dependencies, and example code that wasn't exactly a bare minimum "Hello World". 
 
-So this repo took that `login-form` example, updated all of the packages and configurations to use webpack 5 and babel 7, and removed all of the bloat that isn't needed for boilerplate code. I left in things like `sass` preprocessing because I feel like those are essentials.
+So this repo took that `login-form` example, updated all of the packages and configurations to use webpack 5 babel 7, preact X, and removed all of the bloat that isn't needed for boilerplate code. I left in things like `sass` preprocessing because I feel like that can be useful! But to be honest, I've been gravitating towards `styled-components` more now anyways so in general
+I'd recommend that.
 
 ### Usage Walkthrough
 
@@ -36,14 +58,17 @@ npm run watch
 # this will open a browser window at localhost:9009
 # it will automatically refresh when you make changes
 
-# create/edit your component in `src/components/index.js`
-# to change how the demo page looks, edit `index.html`
+# * create/edit your component in `src/components/index.js`
+# * to change how the demo page looks, edit `index.html`
 
 
 ### Production
 
 # build an optimized bundle
 npm run build
+
+# You can find your bundled widget at:
+cp build/bundle.js /your/wordpress/server/or/something/
 ```
 
 #### Docker
@@ -55,7 +80,7 @@ mv docker/* .
 # build your package and start it
 docker-compose up -d --build
 ```
-Otherwise you can just delete the `docker/` folder.
+Otherwise you can just delete the `docker/` folder if you want. (or not!)
 
 I included this because it was a bit of a trick getting the npm/nginx setup process working and required overriding the nginx config to redirect all urls to `index.html` instead of just `/` and throwing a `404` for any nested pages if you're using something like `react-router`.
 
@@ -63,12 +88,12 @@ I included this because it was a bit of a trick getting the npm/nginx setup proc
 
 ```javascript
 // src/index.js
-import { h } from 'preact';  // need this to render preact components
-import habitat from 'preact-habitat';
 
 const HelloWorld = ({ name='World', color='black' }) => {
   return <h1 style={{ color }}>{`Hello, ${name}!`}</h1>
 }
+
+import habitat from 'preact-habitat';
 
 const { render } = habitat(HelloWorld);
 render({
@@ -172,3 +197,30 @@ You can set parameters that will be used if none are passed in the `<script type
 ```javascript
 render({ defaultParams: { "name": "Woooorld", "color": "blue" } });
 ```
+
+
+## Summary of Project Files
+
+Documentation:
+ - `README.md`: The package description
+ - `LICENSE`: The package license
+
+NPM package configuration
+ - `package.json`: where package info and dependencies are stored
+ - `package-lock.json`: this provides validation for package.json (you should never edit this)
+
+Build configuration
+ - `webpack.config.babel.js`: this is for webpack which handles JSX compilation (and other things)
+ - `postcss.config.js`: this is for sass compiling
+ - `.babelrc`: this helps us use react code with preact
+
+Source code
+ - `src/`: the source code
+   - `src/index.js`: This is where you configure preact habitat
+   - `component/index.js`: This is your app code
+ - `index.html`: This is where you can test out your widget
+
+Compiled Code
+ - `build/`: this folder is where npm outputs your built files 
+   - build/bundle.js: This is the key piece! Your compiled JS code :)
+   - build/index.html: the compiled test html file

@@ -40,8 +40,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.6",
-    "preact": "^8.5.3",
-    "preact-compat": "^3.19.0",
-    "preact-habitat": "^3.3.0"
+    "preact": "^10.5.15",
+    "preact-habitat": "^3.3.0",
+    "styled-components": "^5.3.3"
   }
 }

@@ -11,7 +11,7 @@ module.exports = (env, argv) => {
   
     output: {
       path: path.resolve(__dirname, 'build'),
-      publicPath: '/',
+      publicPath: '/build',
       filename: 'bundle.js',
       libraryTarget: 'umd'
     },
@@ -72,9 +72,13 @@ module.exports = (env, argv) => {
   
     devServer: {
       port: env.port || 9009,
-      hot: true, inline: true,
-      contentBase: '.',  // use index.html at root
-      publicPath: '/build',
+      hot: true, 
+      // inline: true,
+      // static: __dirname,  // use index.html at root
+      static: {
+        directory: path.resolve(__dirname, '.'),
+        publicPath: '/',
+      },
       // colors: true,
       historyApiFallback: true,
       open: true
